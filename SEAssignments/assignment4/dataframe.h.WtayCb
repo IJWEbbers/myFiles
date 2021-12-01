@@ -1,0 +1,60 @@
+#ifndef DATAFRAME_H
+#define DATAFRAME_H
+
+#include <iostream>
+#include <string>
+#include <array>
+
+using namespace std;
+
+class Dataframe{
+   private:
+      array<uint8_t, 252> dataMembers{};  ///data excluding header, size and checksum
+      dataframe elements{};               ///whole dataframe
+      uint8_t size;                       ///size of used data
+      uint8_t checksum;                   ///checksum
+      uint8_t header;                     ///header byte
+
+      void setChecksum();                 ///sets the checksum
+
+   public:
+      using dataframe = array<uint8_t, 255>;
+
+      Dataframe(): dataMembers{}, elements{}{}
+
+      void show();
+      bool checksumIsCorrect() const;
+};
+
+void Dataframe::setData(const array<uint8_t, 252> &data, uint8_t size){
+
+}
+
+void Dataframe::setChecksum(){
+   for(dataframe::iterator i = elements.begin() + 2; i != elements.end()-1; i++){
+      checksum -= *i;
+   }
+   elements.end() -1 =checksum;
+}
+
+void Dataframe::show(){
+   for(dataframe::iterator i = elements.begin(); i != elements.end(); i++){
+      cout << "["<< *i << "] " ;
+   }
+
+}
+
+bool Dataframe::checksumIsCorrect() const{
+   uint8_t total = 0;
+   for(dataframe::iterator i = elements.begin() + 2; i != elements.end(); i++){
+      total += *i;
+   }
+   if(total == 0){
+      return true;
+   }
+   else{
+      return false;
+   }
+}
+
+#endif // DATAFRAME_H

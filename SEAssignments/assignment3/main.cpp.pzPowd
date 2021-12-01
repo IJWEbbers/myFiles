@@ -1,0 +1,25 @@
+#include <iostream>
+#include <array>
+using namespace std;
+
+int main()
+{
+   // C++11 STL array template class, parameters between < and >
+   // Using C++11 uniform initialisation by an initializer_list {…}
+   array<int, 3> ar{2, -2, 3};
+   // Range-based for loop, el is not the index of a specific
+   // element in the array!
+   // e1 is a reference to an array element in ar (we used &).
+   // auto declaration: type will be deduced by the compiler.
+   for (auto& el: ar)
+   {
+    cout << el << " ";
+    el *= 10;
+   }
+   cout << endl;
+   ar[0] = 10 * ar[1];
+   for (const auto el: ar)
+   {
+   cout << el << " ";
+   }
+}
